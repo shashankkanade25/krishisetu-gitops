@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: krishisetu
+  namespace: krishisetu
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: krishisetu
+
+  template:
+    metadata:
+      labels:
+        app: krishisetu
+
+    spec:
+      containers:
+      - name: krishisetu
+        image: shashankkanade25/krishisetu:v1
+
+        ports:
+        - containerPort: 5000
+
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+        readinessProbe: 
+          httpGet: 
+            path: /
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+        env: 
+        - name: APP_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: APP_NAME
+
+        - name: ENV
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: ENV
+
+        - name: DB_USER
+          valueFrom: 
+            secretKeyRef:
+              name: app-secret
+              key: DB_USER
+
+        - name: DB_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: app-secret
+              key: DB_PASSWORD
+
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: MONGO_URI
