@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: krishisetu-ingress
+  namespace: krishisetu
+
+spec:
+  ingressClassName: nginx
+
+  rules:
+
+    http:
+
+      paths:
+
+      - path: /
+
+        pathType: Prefix
+
+        backend:
+
+          service:
+
+            name: krishisetu-service
+
+            port:
+
+              number: 80
