@@ -2,7 +2,7 @@ replicaCount: 3
 
 image: 
   repository: shashankkanade25/krishisetu
-  tag: "46"
+  tag: "47"
   pullPolicy: Always
 
 service:
