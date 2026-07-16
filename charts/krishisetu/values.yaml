@@ -2,7 +2,7 @@ replicaCount: 3
 
 image: 
   repository: shashankkanade25/krishisetu
-  tag: "${BUILD_NUMBER}"
+  tag: "45"
   pullPolicy: Always
 
 service:
